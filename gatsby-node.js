@@ -100,7 +100,7 @@ exports.onCreateNode = (options) => {
       break;
 
     default:
-      // console.warn('Unhandled MK data', relativePath);
+    // console.warn('Unhandled MK data', relativePath);
   }
 };
 
@@ -139,17 +139,24 @@ exports.createPages = async ({ actions, graphql }) => {
   const { createPage } = actions;
 
   const result = await graphql(`
-    query allEspisodes {
-      allEpisode {
-        seasons: group(field: seasonNr) {
-          episodes: nodes {
-            episodeNr
-            title
-          }
-          seasonNr: fieldValue
-        }
+query allEpisodes {
+  allEpisode {
+    seasons: group(field: seasonNr) {
+      episodes: nodes {
+        episodeNr
+        title
       }
+      seasonNr: fieldValue
     }
+  }
+  allFile(filter: {extension: {nin: ["js", "jsx", "md", "mdx", "scss", "css"]}}) {
+    nodes {
+      relativeDirectory
+      base
+      publicURL
+    }
+  }
+}
   `);
 
   if (result.errors) {
@@ -161,7 +168,12 @@ exports.createPages = async ({ actions, graphql }) => {
     const seasonNr = Number(season.seasonNr);
 
     season.episodes.forEach((episode) => {
+      const filterEpisodeAssets = ({
+        relativeDirectory: dir,
+      }) => dir.startsWith(`${seasonNr}/${episode.episodeNr}`);
+
       createPage(createEpisodePage({
+        assets: result.data.allFile.nodes.filter(filterEpisodeAssets),
         ...episode,
         seasonNr,
       }));
