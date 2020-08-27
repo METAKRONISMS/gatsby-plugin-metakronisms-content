@@ -10,6 +10,8 @@ const parseRelativePath = (relativePath) => {
   return { seasonNr, episodeNr };
 };
 
+const createdSeasons = [];
+
 exports.onCreateNode = (options) => {
   const {
     node,
@@ -41,6 +43,7 @@ exports.onCreateNode = (options) => {
   }
 
   if (type !== 'Mdx') return;
+
   const fileNode = getNode(node.parent);
 
   const { relativePath, base } = fileNode;
@@ -58,49 +61,30 @@ exports.onCreateNode = (options) => {
     value: episodeNr,
   });
 
-  switch (base) {
-    case 'intro.md':
-    case 'intro.mdx':
-      createNodeField({
-        node,
-        name: 'mkType',
-        value: 'intro',
-      });
+  if (!createdSeasons.includes(seasonNr)) {
+    createNode({
+      id: `s${seasonNr}`,
+      parent: fileNode.id,
+      seasonNr,
+      internal: {
+        type: 'Season',
+        contentDigest: createContentDigest({ seasonNr }),
+      },
+    });
+  }
 
-      createNode({
-        id: `s${seasonNr}`,
-        parent: fileNode.id,
-        seasonNr,
-        internal: {
-          type: 'Season',
-          contentDigest: createContentDigest({ seasonNr }),
-        },
-      });
-      createNode({
-        id: `s${seasonNr}e${episodeNr}`,
-        parent: `s${seasonNr}`,
-        seasonNr,
-        episodeNr,
-        children: [`s${seasonNr}e${episodeNr}#intro`],
-        title: node.frontmatter.title,
-        internal: {
-          type: 'Episode',
-          contentDigest: createContentDigest({ seasonNr, episodeNr }),
-        },
-      });
-      break;
-
-    case 'outro.md':
-    case 'outro.mdx':
-      createNodeField({
-        node,
-        name: 'mkType',
-        value: 'outro',
-      });
-      break;
-
-    default:
-    // console.warn('Unhandled MK data', relativePath);
+  if (base.startsWith('intro')) {
+    createNode({
+      id: `s${seasonNr}e${episodeNr}`,
+      parent: `s${seasonNr}`,
+      seasonNr,
+      episodeNr,
+      title: node.frontmatter.title,
+      internal: {
+        type: 'Episode',
+        contentDigest: createContentDigest({ seasonNr, episodeNr }),
+      },
+    });
   }
 };
 
@@ -192,7 +176,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     }
     type Episode implements Node @childOf(types: ["Season"], many: true) {
       id: ID!
-      seasonNr: Int
+      seasonNr: Int!
       episodeNr: Int!
       title: String!
     }
