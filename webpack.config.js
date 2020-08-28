@@ -1,3 +1,13 @@
 const neutrino = require('neutrino');
 
-module.exports = neutrino().webpack();
+const config = neutrino().webpack();
+
+module.exports = [
+  {
+    ...config,
+    output: {
+      ...config.output,
+      globalObject: 'this',
+    },
+  },
+];

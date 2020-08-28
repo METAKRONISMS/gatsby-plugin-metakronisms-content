@@ -2,9 +2,6 @@
   "private": "true",
   "name": "gatsby-plugin-metakronisms-content",
   "main": "gatsby-node",
-  "peerDependencies": {
-    "gatsby-plugin-mdx": "^1.2.34"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/METAKRONISMS/gatsby-plugin-metakronisms-content.git"
@@ -28,33 +25,38 @@
   "scripts": {
     "start": "webpack-dev-server --mode development",
     "build": "webpack --mode production",
-    "lint": "eslint --cache --format codeframe --ext mjs,jsx,js src gatsby-node.js",
-    "postinstall": "npm run build"
+    "lint": "eslint --cache --format codeframe --ext mjs,jsx,js src gatsby-node.js"
+  },
+  "peerDependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   },
   "devDependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
     "@neutrinojs/eslint": "^9.3.0",
     "@neutrinojs/react-components": "^9.3.0",
     "eslint": "^7.7.0",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-react-hooks": "^4.1.0",
     "neutrino": "^9.3.0",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12",
-    "webpack-dev-server": "^3.11.0"
+    "webpack-dev-server": "^3.11.0",
+    "webpack-node-externals": "^2.5.2"
   },
   "dependencies": {
-    "core-js": "^3.6.5",
-    "d3": "^5.16.0",
     "gatsby-plugin-mdx": "^1.2.36",
     "gatsby-plugin-transition-link": "^1.20.2",
     "gsap": "^3.5.1",
-    "prop-types": "^15.7.2",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-helmet": "^6.1.0",
-    "react-jss": "^10.4.0",
     "react-toastify": "^6.0.8",
+    "@mdx-js/react": "^1.6.16",
+    "core-js": "^3.6.5",
+    "d3": "^5.16.0",
+    "prop-types": "^15.7.2",
+    "react-jss": "^10.4.0",
     "source-map-support": "^0.5.19"
   }
 }

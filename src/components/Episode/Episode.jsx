@@ -5,7 +5,6 @@ import { MDXRenderer } from 'gatsby-plugin-mdx';
 
 import { createUseStyles, useTheme } from 'react-jss';
 import Layout from '../Layout/Layout';
-import SEO from '../Layout/SEO';
 import Link from '../Link';
 import Card from '../Card/Card';
 import EpisodeContext from './Context';
@@ -80,8 +79,6 @@ const Episode = (props) => {
   return (
     <EpisodeContext.Provider value={episodeContext}>
       <Layout>
-        <SEO title={title} />
-
         <div className={classes.root}>
           <div className={classes.main}>
             <div className={classes.episodeInfo}>

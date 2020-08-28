@@ -2,8 +2,8 @@
 import React from 'react';
 
 import Slides from './Slides';
-import { WithSlides as Slide } from './Slides.Slide';
-import { WithSlides as TypistSlide } from './Slides.TypistSlide';
+import { WithSlides as Slide } from './Slide';
+// import { WithSlides as TypistSlide } from './Slides.TypistSlide';
 
 const Anim1Slide = (props) => (<Slide {...props} />);
 
@@ -36,9 +36,9 @@ Basic.args = {
     <Slide key="a">
       Slide
     </Slide>,
-    <TypistSlide key="b">
-      TypistSlide
-    </TypistSlide>,
+    // <TypistSlide key="b">
+    //   TypistSlide
+    // </TypistSlide>,
     <Anim1Slide key="c">
       Anim1Slide
     </Anim1Slide>,
