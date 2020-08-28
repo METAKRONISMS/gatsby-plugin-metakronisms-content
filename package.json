@@ -28,10 +28,28 @@
     "lint": "eslint --cache --format codeframe --ext mjs,jsx,js src gatsby-node.js"
   },
   "peerDependencies": {
+    "core-js": "^3.6.5",
+    "gatsby-plugin-mdx": "^1.2.36",
+    "gatsby-plugin-transition-link": "^1.20.2",
+    "gsap": "^3.5.1",
+    "react-toastify": "^6.0.8",
+    "@mdx-js/react": "^1.6.16",
+    "d3": "^5.16.0",
+    "prop-types": "^15.7.2",
+    "react-jss": "^10.4.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },
   "devDependencies": {
+    "core-js": "^3.6.5",
+    "gatsby-plugin-mdx": "^1.2.36",
+    "gatsby-plugin-transition-link": "^1.20.2",
+    "gsap": "^3.5.1",
+    "react-toastify": "^6.0.8",
+    "@mdx-js/react": "^1.6.16",
+    "d3": "^5.16.0",
+    "prop-types": "^15.7.2",
+    "react-jss": "^10.4.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "@neutrinojs/eslint": "^9.3.0",
@@ -48,15 +66,6 @@
     "webpack-node-externals": "^2.5.2"
   },
   "dependencies": {
-    "gatsby-plugin-mdx": "^1.2.36",
-    "gatsby-plugin-transition-link": "^1.20.2",
-    "gsap": "^3.5.1",
-    "react-toastify": "^6.0.8",
-    "@mdx-js/react": "^1.6.16",
-    "core-js": "^3.6.5",
-    "d3": "^5.16.0",
-    "prop-types": "^15.7.2",
-    "react-jss": "^10.4.0",
     "source-map-support": "^0.5.19"
   }
 }
