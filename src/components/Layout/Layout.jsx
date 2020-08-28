@@ -1,13 +1,5 @@
-/**
- * Layout component that queries for data
- * with Gatsby's useStaticQuery component
- *
- * See: https://www.gatsbyjs.org/docs/use-static-query/
- */
-
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useStaticQuery, graphql } from 'gatsby';
 import { ToastContainer } from 'react-toastify';
 
 import { createUseStyles, useTheme } from 'react-jss';
@@ -22,15 +14,7 @@ const useStyles = createUseStyles((theme) => ({}));
 const Layout = ({ children, noHeader = false }) => {
   const theme = useTheme();
   const classes = useStyles({ theme });
-  const data = useStaticQuery(graphql`
-    query SiteTitleQuery {
-      site {
-        siteMetadata {
-          title
-        }
-      }
-    }
-  `);
+  const data = {};
 
   const [visible, setVisible] = React.useState(1);
   const handleMouseMove = () => !visible && setVisible(true);

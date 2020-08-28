@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { graphql } from 'gatsby';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 
 import { createUseStyles, useTheme } from 'react-jss';
@@ -135,27 +134,5 @@ Episode.propTypes = {
     }).isRequired,
   }).isRequired,
 };
-
-export const query = graphql`
-query allEpisodeMdx ($seasonNr: Int = 0, $episodeNr: Int = 0) {
-  episodeMdx: allMdx(filter: {fields: {seasonNr: {eq: $seasonNr}, episodeNr: {eq: $episodeNr}}}) {
-    nodes {
-      parent {
-        ... on File {
-          name
-        }
-      }
-      frontmatter {
-        title
-        choices {
-          target
-          title
-        }
-      }
-      body
-    }
-  }
-}
-`;
 
 export default Episode;
