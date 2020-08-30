@@ -8,6 +8,4 @@ const Season = () => (
   </Layout>
 );
 
-Season.displayName = 'MKSeason';
-
 export default Season;

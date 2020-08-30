@@ -5,7 +5,6 @@ import { MDXRenderer } from 'gatsby-plugin-mdx';
 
 import { createUseStyles, useTheme } from 'react-jss';
 import Layout from '../Layout/Layout';
-import Link from '../Link';
 import Card from '../Card/Card';
 import EpisodeContext from './Context';
 import useEpisode from './useEpisode';
@@ -16,16 +15,6 @@ import useApp from '../../hooks/useApp';
 
 // eslint-disable-next-line
 const useStyles = createUseStyles((theme) => ({}));
-
-const EpisodeLinks = ({
-  items,
-}) => items.map(({ to, title }) => (
-  <Link key={to} to={to}>
-    {title}
-  </Link>
-));
-
-EpisodeLinks.displayName = 'MKEpisodeLinks';
 
 export const episodePath = (s, e, p) => `/episodes/s${s}e${e}/${p || ''}`;
 
@@ -53,6 +42,15 @@ const Episode = (props) => {
       episodeMdx,
     },
   } = props;
+
+  /*
+  console.info(JSON.stringify({
+    // eslint-disable-next-line react/destructuring-assignment
+    pageContext: props.pageContext,
+    // eslint-disable-next-line react/destructuring-assignment
+    data: props.data,
+  }, null, 2));
+  */
 
   const mdx = mdxObject(episodeMdx);
   const [progress, setStepProgress] = React.useState(0);
@@ -108,8 +106,6 @@ const Episode = (props) => {
     </EpisodeContext.Provider>
   );
 };
-
-Episode.displayName = 'MKEpisode';
 
 Episode.propTypes = {
   pageContext: PropTypes.shape({

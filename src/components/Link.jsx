@@ -32,8 +32,6 @@ const Link = ({
   );
 };
 
-Link.displayName = 'MKLink';
-
 Link.propTypes = {
   children: PropTypes.node.isRequired,
   to: PropTypes.string.isRequired,

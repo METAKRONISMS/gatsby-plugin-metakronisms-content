@@ -63,8 +63,6 @@ const Slide = ({
   );
 };
 
-Slide.displayName = 'MKSlide';
-
 Slide.propTypes = {
   className: PropTypes.string,
   children: PropTypes.node,

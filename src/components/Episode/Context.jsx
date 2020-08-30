@@ -10,8 +10,6 @@ export const defaultEpisode = {
 
 const EpisodeContext = React.createContext(defaultEpisode);
 
-EpisodeContext.displayName = 'MKEpisodeContext';
-
 export default EpisodeContext;
 
 export const withEpisode = (Comp) => {
@@ -25,8 +23,6 @@ export const withEpisode = (Comp) => {
       }
     </EpisodeContext.Consumer>
   );
-
-  returned.displayName = `withEpisode(${Comp.displayName || Comp.name})`;
 
   return returned;
 };

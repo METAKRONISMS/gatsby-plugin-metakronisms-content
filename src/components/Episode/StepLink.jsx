@@ -23,6 +23,4 @@ StepLink.defaultProps = {
   text: null,
 };
 
-StepLink.displayName = 'MKStepLink';
-
 export default StepLink;

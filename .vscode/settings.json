@@ -3,7 +3,7 @@
     "**/package-lock.json": true,
     "**/LICENSE": true,
     "**/.vscode": true,
-    "**/dist": true,
+    // "**/dist": true,
     "**/build": true,
     "**/storybook-static": true,
     "**/node_modules": true

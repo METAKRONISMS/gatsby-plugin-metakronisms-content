@@ -9,8 +9,6 @@ import { withEpisode } from './Context';
 const useStyles = createUseStyles((theme) => ({}));
 
 class Graph extends React.Component {
-  // state = {};
-
   componentDidMount() {
     this.renderChart();
   }
@@ -206,14 +204,14 @@ class Graph extends React.Component {
       <div
         key={steps.join('')}
         ref={this.refEl}
-        className={classes.root}
+        className={(classes || {}).root}
       />
     );
   }
 }
 
 Graph.propTypes = {
-  classes: PropTypes.objectOf(PropTypes.string).isRequired,
+  classes: PropTypes.objectOf(PropTypes.string),
   full: PropTypes.bool,
   onItemMouseEnter: PropTypes.func,
   onItemMouseOut: PropTypes.func,
@@ -230,13 +228,12 @@ Graph.propTypes = {
 };
 
 Graph.defaultProps = {
+  classes: null,
   full: false,
   onItemMouseEnter: null,
   onItemMouseOut: null,
   onItemClick: null,
 };
-
-Graph.displayName = 'MKEpisode.Graph';
 
 export default (props) => {
   const theme = useTheme();
@@ -258,5 +255,3 @@ Connected.defaultProps = {
   onItemMouseOut: null,
   onItemClick: null,
 };
-
-Connected.displayName = 'MKEpisode.ConnectedGraph';

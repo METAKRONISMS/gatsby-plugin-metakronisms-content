@@ -9,8 +9,6 @@ export const defaultSlides = {
 
 const SlidesContext = React.createContext({ ...defaultSlides });
 
-SlidesContext.displayName = 'MKSlidesContext';
-
 export default SlidesContext;
 
 export const withSlides = (Comp) => {
@@ -22,6 +20,6 @@ export const withSlides = (Comp) => {
       )}
     </SlidesContext.Consumer>
   );
-  returned.displayName = `withSlides(${Comp.displayName || Comp.name})`;
+
   return returned;
 };

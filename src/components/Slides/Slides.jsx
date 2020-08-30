@@ -45,8 +45,6 @@ const Slides = ({
   );
 };
 
-Slides.displayName = 'MKSlides';
-
 Slides.propTypes = {
   getStepInfo: PropTypes.func.isRequired,
   makeStep: PropTypes.func.isRequired,

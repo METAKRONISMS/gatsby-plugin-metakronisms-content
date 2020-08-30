@@ -42,6 +42,4 @@ Button.defaultProps = {
   hide: false,
 };
 
-Button.displayName = 'MKButton';
-
 export default Button;

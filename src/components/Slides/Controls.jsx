@@ -34,6 +34,4 @@ Controls.propTypes = {
   setStepProgress: PropTypes.func.isRequired,
 };
 
-Controls.displayName = 'MKControls';
-
 export default Controls;

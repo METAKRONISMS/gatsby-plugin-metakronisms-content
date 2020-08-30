@@ -47,8 +47,6 @@ Choices.propTypes = {
   progress: PropTypes.number.isRequired,
 };
 
-Choices.displayName = 'MKEpisode.Choices';
-
 export default Choices;
 
 export const Connected = withEpisode(Choices);

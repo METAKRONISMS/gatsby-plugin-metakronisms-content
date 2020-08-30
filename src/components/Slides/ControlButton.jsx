@@ -39,8 +39,6 @@ ControlButton.defaultProps = {
   hide: false,
 };
 
-ControlButton.displayName = 'MKSlideControlButton';
-
 export const PrevButton = ({ hide }) => (
   <ControlButton hide={hide} prev>
     Back
@@ -55,8 +53,6 @@ PrevButton.defaultProps = {
   hide: false,
 };
 
-PrevButton.displayName = 'MKSlidePrevButton';
-
 export const NextButton = ({ hide }) => (
   <ControlButton hide={hide}>
     Continue
@@ -70,7 +66,5 @@ NextButton.propTypes = {
 NextButton.defaultProps = {
   hide: false,
 };
-
-NextButton.displayName = 'MKSlideNextButton';
 
 export default ControlButton;

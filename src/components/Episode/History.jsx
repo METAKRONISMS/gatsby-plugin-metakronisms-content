@@ -26,6 +26,4 @@ const History = withEpisode(({
   );
 });
 
-History.displayName = 'MKEpisode.History';
-
 export default History;

@@ -4,9 +4,12 @@ const reactComponents = require('@neutrinojs/react-components');
 const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
-  output: {
-    globalObject: 'this',
+  options: {
+    output: 'dist',
   },
+  // output: {
+  //   globalObject: 'this',
+  // },
   use: [
     eslint({
       include: [
@@ -46,6 +49,7 @@ module.exports = {
     (neutrino) => {
       // console.info('neutrino before', neutrino.config.module);
       neutrino.config.optimization.set('minimize', !process.env.BUILD_SKIP_MIN);
+      neutrino.config.output.globalObject('this');
 
       // neutrino.config.module.rule('scss')
       //   .oneOf('normal')
@@ -58,21 +62,20 @@ module.exports = {
       //   .use('sass')
       //   .loader('sass-loader')
       //   .options({ modules: true });
-      // console.info('neutrino after', neutrino.config.module);
 
-      // https://github.com/zeropaper/eazin/blob/master/src/dev/neutrino-monorepo.js
-      neutrino.config
-        .externals(nodeExternals())
-        // .when(hasSourceMap, () => neutrino.use(banner()))
-        // Disable the chunking behaviour inherited from the react preset
-        .optimization.splitChunks(false)
-        .runtimeChunk(false)
-        .end()
-        .output // Override hashed filename/subdirectory usage inherited from @neutrinojs/react.
-        .filename('[name].js')
-        .library('[name]')
-        .libraryTarget('umd')
-        .umdNamedDefine(true);
+      // // https://github.com/zeropaper/eazin/blob/master/src/dev/neutrino-monorepo.js
+      // neutrino.config
+      //   .externals(nodeExternals())
+      //   // .when(hasSourceMap, () => neutrino.use(banner()))
+      //   // Disable the chunking behaviour inherited from the react preset
+      //   .optimization.splitChunks(false)
+      //   .runtimeChunk(false)
+      //   .end()
+      //   .output // Override hashed filename/subdirectory usage inherited from @neutrinojs/react.
+      //   .filename('[name].js')
+      //   .library('[name]')
+      //   .libraryTarget('umd')
+      //   .umdNamedDefine(true);
     }
   ],
 };
