@@ -2,6 +2,7 @@ import React from 'react';
 
 // import '../Layout/Layout.scss';
 
+import { ThemeProvider } from 'react-jss';
 import Graph from './Graph';
 
 import episdoeFixtures from './Episode.stories.fixtures';
@@ -11,10 +12,16 @@ export default {
   component: Graph,
 };
 
-// eslint-disable-next-line react/jsx-props-no-spreading
-export const Default = (args) => (<Graph {...args} />);
-Default.args = { ...episdoeFixtures };
+export const Basic = (args) => (
+  <ThemeProvider theme={{}}>
+    <Graph
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...args}
+    />
+  </ThemeProvider>
+);
+Basic.args = { ...episdoeFixtures };
 
 // eslint-disable-next-line react/jsx-props-no-spreading
-export const Full = (args) => (<Graph {...args} />);
+export const Full = (args) => (<Basic {...args} />);
 Full.args = { ...episdoeFixtures, full: true };

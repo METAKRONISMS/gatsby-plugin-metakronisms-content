@@ -1,7 +1,6 @@
 import React from 'react';
 
-// import '../Layout/Layout.scss';
-
+import { ThemeProvider } from 'react-jss';
 import Episode from './Episode';
 
 import { base as baseFixture } from './Episode.stories.fixtures';
@@ -12,8 +11,19 @@ export default {
   args: {
     ...baseFixture,
   },
+  argTypes: {
+    pageContext: { control: { disable: true } },
+    data: { control: { disable: true } },
+  },
 };
 
 // eslint-disable-next-line react/jsx-props-no-spreading
-export const Default = (args) => (<Episode {...args} />);
-// Default.args = { ...episdoeFixtures };
+export const Basic = (args) => (
+  <ThemeProvider theme={{}}>
+    <Episode
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...args}
+    />
+  </ThemeProvider>
+);
+Basic.args = {};

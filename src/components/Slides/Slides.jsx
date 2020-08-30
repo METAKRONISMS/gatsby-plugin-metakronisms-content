@@ -14,7 +14,6 @@ const Slides = ({
   children,
   getStepInfo,
   makeStep,
-  setStepProgress,
   background,
 }) => {
   const slidesContext = useSlides(children.length);
@@ -27,7 +26,6 @@ const Slides = ({
   if (!children.length) return '(No Slides)';
 
   const showSlide = Math.min(slidesContext.currentSlide, slidesContext.slidesCount - 1);
-  setStepProgress(slidesContext.currentSlide / slidesContext.slidesCount);
 
   return (
     <SlidesContext.Provider value={slidesContext}>
@@ -48,7 +46,6 @@ const Slides = ({
 Slides.propTypes = {
   getStepInfo: PropTypes.func.isRequired,
   makeStep: PropTypes.func.isRequired,
-  setStepProgress: PropTypes.func.isRequired,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,

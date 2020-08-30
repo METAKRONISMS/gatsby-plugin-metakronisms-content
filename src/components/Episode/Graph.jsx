@@ -6,9 +6,16 @@ import { createUseStyles, useTheme } from 'react-jss';
 import { withEpisode } from './Context';
 
 // eslint-disable-next-line
-const useStyles = createUseStyles((theme) => ({}));
+const useStyles = createUseStyles((theme) => ({
+  root: {
+    minWidth: 100,
+    minHeight: 100,
+    maxWidth: 400,
+    maxHeight: 400,
+  },
+}));
 
-class Graph extends React.Component {
+class GraphBase extends React.Component {
   componentDidMount() {
     this.renderChart();
   }
@@ -210,7 +217,7 @@ class Graph extends React.Component {
   }
 }
 
-Graph.propTypes = {
+GraphBase.propTypes = {
   classes: PropTypes.objectOf(PropTypes.string),
   full: PropTypes.bool,
   onItemMouseEnter: PropTypes.func,
@@ -227,7 +234,7 @@ Graph.propTypes = {
   })).isRequired,
 };
 
-Graph.defaultProps = {
+GraphBase.defaultProps = {
   classes: null,
   full: false,
   onItemMouseEnter: null,
@@ -235,12 +242,21 @@ Graph.defaultProps = {
   onItemClick: null,
 };
 
-export default (props) => {
+const Graph = (props) => {
   const theme = useTheme();
   const classes = useStyles({ theme });
   // eslint-disable-next-line react/jsx-props-no-spreading
-  return (<Graph {...props} classes={classes} />);
+  return (<GraphBase {...props} classes={classes} />);
 };
+
+export default Graph;
+
+// Graph.propTypes = {
+//   ...GraphBase.propTypes,
+// };
+// Graph.defaultProps = {
+//   ...GraphBase.defaultProps,
+// };
 
 export const Connected = withEpisode(Graph);
 

@@ -79,6 +79,12 @@ const Episode = (props) => {
       <Layout>
         <div className={classes.root}>
           <div className={classes.main}>
+            <div className={classes.mdxWrapper}>
+              {body
+                ? (<MDXRenderer>{body}</MDXRenderer>)
+                : 'Something is not quite right. Sorry'}
+            </div>
+
             <div className={classes.episodeInfo}>
               <Card className={classes.episodeInfoCard} appear>
                 <History />
@@ -91,12 +97,6 @@ const Episode = (props) => {
                   onItemClick={(...args) => { console.info('Click', ...args); }}
                 />
               </Card>
-            </div>
-
-            <div className={classes.mdxWrapper}>
-              {body
-                ? (<MDXRenderer>{body}</MDXRenderer>)
-                : 'Something is not quite right. Sorry'}
             </div>
 
             <Choices progress={progress} />

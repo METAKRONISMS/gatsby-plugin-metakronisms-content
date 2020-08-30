@@ -9,7 +9,8 @@ const useStyles = createUseStyles((theme) => ({
     margin: 10,
   },
   inner: {
-    padding: 10,
+    border: '1px solid currentColor',
+    padding: 9,
   },
 }));
 
