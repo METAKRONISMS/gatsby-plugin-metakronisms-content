@@ -16,7 +16,9 @@ const useStyles = createUseStyles((theme) => ({
     backgroundColor: 'currentColor',
     width: `${Math.max(0, Math.min(min / max, 1)) * 100}%`,
   }),
-}));
+}), {
+  name: 'Progress',
+});
 
 const Progress = ({
   min,

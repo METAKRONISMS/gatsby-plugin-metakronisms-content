@@ -24,7 +24,9 @@ const useStyles = createUseStyles((theme) => ({
       : theme.palette[color].main;
     return returned;
   },
-}));
+}), {
+  name: 'Button',
+});
 
 const Button = ({
   children,

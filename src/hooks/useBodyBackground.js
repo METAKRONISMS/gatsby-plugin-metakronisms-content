@@ -3,7 +3,9 @@ import { useEffect } from 'react';
 import { createUseStyles, useTheme } from 'react-jss';
 
 // eslint-disable-next-line
-const useStyles = createUseStyles((theme) => ({}));
+const useStyles = createUseStyles((theme) => ({}), {
+  name: 'useBodyBackground',
+});
 
 const useBodyBackground = (url) => {
   const theme = useTheme();

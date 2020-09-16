@@ -221,7 +221,9 @@ const useStyles = createUseStyles((theme) => ({
       backgroundColor: theme.palette.backgroundColor,
     },
   },
-}));
+}), {
+  name: 'ThemeManager',
+});
 
 export const CSSBaseline = () => {
   const theme = useTheme();

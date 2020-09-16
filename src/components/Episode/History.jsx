@@ -3,7 +3,11 @@ import { createUseStyles, useTheme } from 'react-jss';
 import { useEpisode } from './Context';
 
 // eslint-disable-next-line
-const useStyles = createUseStyles((theme) => ({}));
+const useStyles = createUseStyles((theme) => ({
+  root: {},
+}), {
+  name: 'History',
+});
 
 const History = () => {
   const {

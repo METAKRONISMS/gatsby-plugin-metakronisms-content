@@ -23,7 +23,9 @@ const useTypographyStyles = createUseStyles((theme) => ({
       ? theme.palette[color].textContrast
       : undefined,
   }),
-}));
+}), {
+  name: 'Typography',
+});
 
 // eslint-disable-next-line react/prop-types
 const Typography = ({ children, ...props }) => {
@@ -49,7 +51,9 @@ const useGroupStyles = createUseStyles((theme) => ({
     padding: theme.spacing(2),
     margin: theme.spacing(2),
   },
-}));
+}), {
+  name: 'Group',
+});
 
 const Group = ({ children }) => {
   const styles = useGroupStyles();

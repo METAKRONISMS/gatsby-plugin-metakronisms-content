@@ -7,7 +7,9 @@ import SlidesControls from './Controls';
 import useBodyBackground from '../../hooks/useBodyBackground';
 
 // eslint-disable-next-line
-const useStyles = createUseStyles((theme) => ({}));
+const useStyles = createUseStyles((theme) => ({}), {
+  name: 'Slides',
+});
 
 const Slides = ({
   children,

@@ -9,7 +9,9 @@ const useStyles = createUseStyles((theme) => ({
     width: '100%',
     height: '100%',
   },
-}));
+}), {
+  name: 'Layout',
+});
 
 const Layout = ({
   children,

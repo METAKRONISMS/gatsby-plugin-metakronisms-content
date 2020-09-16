@@ -11,7 +11,9 @@ const useStyles = createUseStyles((theme) => ({
     opacity: 0.25,
   },
   button: {},
-}));
+}), {
+  name: 'Choices',
+});
 
 export const defaultComponents = { Button };
 

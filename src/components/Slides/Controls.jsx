@@ -28,7 +28,9 @@ const useStyles = createUseStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
   },
-}));
+}), {
+  name: 'Controls',
+});
 
 const Controls = ({
   className,

@@ -13,7 +13,9 @@ const useStyles = createUseStyles((theme) => ({
     maxWidth: 400,
     maxHeight: 400,
   },
-}));
+}), {
+  name: 'Graph',
+});
 
 class GraphBase extends React.Component {
   componentDidMount() {

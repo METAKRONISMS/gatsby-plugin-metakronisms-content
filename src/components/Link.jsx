@@ -5,7 +5,11 @@ import AniLink from 'gatsby-plugin-transition-link/AniLink';
 import { createUseStyles, useTheme } from 'react-jss';
 
 // eslint-disable-next-line
-const useStyles = createUseStyles((theme) => ({}));
+const useStyles = createUseStyles((theme) => ({
+  root: {},
+}), {
+  name: 'Link',
+});
 
 const Link = ({
   to,
