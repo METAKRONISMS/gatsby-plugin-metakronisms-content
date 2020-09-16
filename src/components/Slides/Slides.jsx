@@ -11,20 +11,23 @@ const useStyles = createUseStyles((theme) => ({}), {
   name: 'Slides',
 });
 
-const Slides = ({
-  children,
-  background,
-  defaultDuration,
-  classes: baseClasses,
-  // eslint-disable-next-line react/prop-types
-  episodeContext: { setStepProgress = () => { }, stepProgress = 0 } = {},
-}) => {
+const Slides = (props) => {
+  const {
+    children,
+    background,
+    defaultDuration,
+    classes: baseClasses,
+    episodeContext: {
+      setStepProgress,
+      stepProgress,
+    },
+  } = props;
   const ini = Math.min(children.length - 1, stepProgress * children.length);
   const [currentSlide, setCurrentSlide] = React.useState(ini);
 
   const proxy = React.useCallback((val) => {
     const now = val / children.length;
-    if (stepProgress !== now && now <= 1) setStepProgress(now);
+    if (stepProgress !== now && now <= 1 && now >= 0) setStepProgress(now);
     return val;
   }, [children.length, stepProgress, setStepProgress]);
 
@@ -33,8 +36,7 @@ const Slides = ({
   }, [proxy]);
 
   const nextSlide = React.useCallback(() => {
-    // important! `<=` allows to show buttons
-    setCurrentSlide((prev) => proxy(prev <= children.length ? prev + 1 : prev));
+    setCurrentSlide((prev) => proxy(prev < children.length ? prev + 1 : prev));
   }, [children.length, proxy]);
 
   const showSlide = Math.min(currentSlide, children.length - 1);
@@ -92,7 +94,10 @@ Slides.propTypes = {
   ]).isRequired,
   background: PropTypes.string,
   defaultDuration: PropTypes.number,
-  episodeContext: PropTypes.shape({}).isRequired,
+  episodeContext: PropTypes.shape({
+    setStepProgress: PropTypes.func.isRequired,
+    stepProgress: PropTypes.number.isRequired,
+  }).isRequired,
 };
 
 Slides.defaultProps = {

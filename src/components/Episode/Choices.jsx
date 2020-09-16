@@ -8,7 +8,7 @@ import Button from '../Button';
 const useStyles = createUseStyles((theme) => ({
   root: {},
   hidden: {
-    opacity: 0.25,
+    opacity: 0,
   },
   button: {},
 }), {

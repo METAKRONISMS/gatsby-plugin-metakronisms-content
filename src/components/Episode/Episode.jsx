@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { MDXProvider } from '@mdx-js/react';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 
 import EpisodeContext, { defaultEpisode } from './Context';
@@ -59,8 +58,8 @@ const Episode = (props) => {
     History: HistoryComp,
     Graph: GraphComp,
     Choices: ChoicesComp,
-    // Slides: SlidesComp,
-    // Slide: SlideComp,
+    Slides: SlidesComp = Slides,
+    Slide: SlideComp = Slide,
   } = { ...defaultComponents, ...(components || {}) };
 
   const mdx = mdxObject(episodeMdx);
@@ -94,15 +93,16 @@ const Episode = (props) => {
   // eslint-disable-next-line no-unused-vars
   const allComponents = {
     ...(components || {}),
+    Slides: SlidesComp,
+    Slide: SlideComp,
   };
 
   const readyComponents = { ...allComponents };
   Object.keys(allComponents).forEach((key) => {
     const Comp = allComponents[key];
-    Comp.displayName = `MK${Comp}`;
     readyComponents[key] = (thisProps) => (
       <Comp
-          // eslint-disable-next-line react/jsx-props-no-spreading
+        // eslint-disable-next-line react/jsx-props-no-spreading
         {...thisProps}
         episodeContext={ctx}
       />
@@ -111,11 +111,14 @@ const Episode = (props) => {
 
   const children = body
     ? (
-      <MDXProvider>
-        <MDXRenderer>
-          {body}
-        </MDXRenderer>
-      </MDXProvider>
+      <MDXRenderer
+        scope={{
+          ...readyComponents,
+          ...ctx,
+        }}
+      >
+        {body}
+      </MDXRenderer>
     )
     : 'Something is not quite right. Sorry';
 

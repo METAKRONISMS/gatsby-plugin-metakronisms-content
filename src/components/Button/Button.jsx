@@ -12,7 +12,7 @@ const useStyles = createUseStyles((theme) => ({
   }) => {
     const returned = {
       ...theme.mixins.button,
-      opacity: hidden ? 0.25 : 1,
+      opacity: hidden ? 0 : 1,
       cursor: disabled ? 'normal' : 'pointer',
       pointerEvents: disabled || hidden ? 'none' : 'all',
     };
