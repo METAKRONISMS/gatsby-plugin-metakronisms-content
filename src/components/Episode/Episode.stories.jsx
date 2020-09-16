@@ -1,7 +1,9 @@
+/* eslint-disable react/jsx-props-no-spreading, react/prop-types */
 import React from 'react';
 
-import { ThemeProvider } from 'react-jss';
 import Episode from './Episode';
+import Slides from '../Slides/Slides';
+import Slide from '../Slides/Slide';
 
 import { base as baseFixture } from './Episode.stories.fixtures';
 
@@ -17,13 +19,14 @@ export default {
   },
 };
 
-// eslint-disable-next-line react/jsx-props-no-spreading
 export const Basic = (args) => (
-  <ThemeProvider theme={{}}>
-    <Episode
-      // eslint-disable-next-line react/jsx-props-no-spreading
-      {...args}
-    />
-  </ThemeProvider>
+  <Episode
+    // eslint-disable-next-line react/jsx-props-no-spreading
+    {...args}
+    components={{
+      Slides,
+      Slide,
+    }}
+  />
 );
 Basic.args = {};

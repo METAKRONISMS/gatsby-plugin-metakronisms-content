@@ -1,20 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { createUseStyles, useTheme } from 'react-jss';
 
-const Layout = ({ children }) => {
-  const [visible, setVisible] = React.useState(1);
-  const handleMouseMove = () => !visible && setVisible(true);
-  React.useEffect(() => {
-    const timer = setTimeout(() => setVisible(false), 1500);
-    window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    return () => {
-      clearTimeout(timer);
-      window.removeEventListener('mousemove', handleMouseMove, { passive: true });
-    };
-  });
+// eslint-disable-next-line no-unused-vars
+const useStyles = createUseStyles((theme) => ({
+  root: {
+    position: 'relative',
+    width: '100%',
+    height: '100%',
+  },
+}));
+
+const Layout = ({
+  children,
+  className,
+}) => {
+  const theme = useTheme();
+  const styles = useStyles({ theme });
 
   return (
-    <div data-visible={visible}>
+    <div
+      className={[
+        className,
+        styles.root,
+      ].filter(Boolean).join(' ')}
+    >
       {children}
     </div>
   );
@@ -22,6 +32,11 @@ const Layout = ({ children }) => {
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
+  className: PropTypes.string,
+};
+
+Layout.defaultProps = {
+  className: null,
 };
 
 export default Layout;

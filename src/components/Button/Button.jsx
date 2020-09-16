@@ -3,26 +3,61 @@ import PropTypes from 'prop-types';
 
 import { createUseStyles, useTheme } from 'react-jss';
 
-// eslint-disable-next-line
-const useStyles = createUseStyles((theme) => ({}));
+const useStyles = createUseStyles((theme) => ({
+  root: ({
+    // anim,
+    hidden,
+    disabled,
+    color,
+  }) => {
+    const returned = {
+      ...theme.mixins.button,
+      opacity: hidden ? 0.25 : 1,
+      cursor: disabled ? 'normal' : 'pointer',
+      pointerEvents: disabled || hidden ? 'none' : 'all',
+    };
+    returned.color = disabled
+      ? theme.palette[color].textDisabled
+      : theme.palette[color].textContrast;
+    returned.backgroundColor = disabled
+      ? theme.palette[color].disabled
+      : theme.palette[color].main;
+    return returned;
+  },
+}));
 
 const Button = ({
   children,
   className,
-  hide,
-  ...rest
+  hidden,
+  anim,
+  type,
+  classes: baseClasses,
+  ...props
 }) => {
   const theme = useTheme();
-  const classes = useStyles({ ...rest, theme });
+  const classes = {
+    ...useStyles({
+      ...props,
+      hidden,
+      anim,
+      theme,
+    }),
+    ...(baseClasses || {}),
+  };
+
+  // if the anim,
+
   return (
     <button
-      type="button"
+      // eslint-disable-next-line react/button-has-type
+      type={type}
       // eslint-disable-next-line react/jsx-props-no-spreading
-      {...rest}
+      {...props}
       className={[
         classes.root,
         className,
-        hide && classes.hide,
+        hidden && classes.hidden,
       ].filter(Boolean).join(' ')}
     >
       {children}
@@ -31,15 +66,25 @@ const Button = ({
 };
 
 Button.propTypes = {
+  classes: PropTypes.objectOf(PropTypes.string),
   children: PropTypes.node,
+  type: PropTypes.oneOf(['button', 'reset', 'submit']),
+  anim: PropTypes.oneOf(['in', 'out']),
   className: PropTypes.string,
-  hide: PropTypes.bool,
+  color: PropTypes.string,
+  disabled: PropTypes.bool,
+  hidden: PropTypes.bool,
 };
 
 Button.defaultProps = {
+  classes: null,
+  type: 'button',
   children: null,
   className: null,
-  hide: false,
+  color: 'primary',
+  disabled: false,
+  anim: null,
+  hidden: false,
 };
 
 export default Button;

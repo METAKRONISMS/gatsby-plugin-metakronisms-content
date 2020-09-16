@@ -3,18 +3,19 @@ import React from 'react';
 
 import { ThemeProvider } from 'react-jss';
 import Slides from './Slides';
-import { WithSlides as Slide } from './Slide';
-// import { WithSlides as TypistSlide } from './Slides.TypistSlide';
+import Slide from './Slide';
+import { useSlides } from './Context';
 
 const Anim1Slide = (props) => (<Slide {...props} />);
 
 export default {
   title: 'Components/Slides',
   component: Slides,
+  args: {
+    defaultDuration: 0,
+  },
   argTypes: {
-    getStepInfo: { action: 'getStepInfo' },
-    makeStep: { action: 'getStepInfo' },
-    children: { control: false },
+    children: { control: { disable: true } },
   },
 };
 
@@ -25,7 +26,18 @@ export const Basic = (args) => (
         args.getStepInfo(...a);
         return {
           title: 'Step title',
-          choices: [],
+          choices: [
+            {
+              title: 'title',
+              name: 'name',
+              target: 'yo',
+            },
+            {
+              title: 'title',
+              name: 'name',
+              target: 'yoyo',
+            },
+          ],
         };
       }}
       makeStep={args.makeStep}
@@ -35,13 +47,36 @@ export const Basic = (args) => (
   </ThemeProvider>
 );
 
+const Next = () => {
+  const { nextSlide } = useSlides();
+  return (
+    <button type="button" onClick={nextSlide}>
+      next...
+    </button>
+  );
+};
+
 Basic.args = {
+  defaultDuration: 0,
   children: [
     <Slide key="a">
-      Slide
+      No specified duration
+    </Slide>,
+    <Slide key="b" duration={500}>
+      500ms duration
     </Slide>,
     <Anim1Slide key="c">
       Anim1Slide
     </Anim1Slide>,
+    <Slide key="b" duration={0}>
+      0 duration
+      <Next />
+    </Slide>,
+    <Slide key="b" duration={20000}>
+      20s duration
+    </Slide>,
   ],
 };
+
+export const DefaultDuration = (args) => (<Basic {...args} />);
+DefaultDuration.args = { ...Basic.args, defaultDuration: 6000 };

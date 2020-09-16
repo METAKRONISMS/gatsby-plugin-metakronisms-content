@@ -11,9 +11,7 @@ export default {
 };
 
 export const Basic = (args) => <Button {...args} />;
-
-Basic.args = { children: 'hello' };
+Basic.args = { children: 'hello', disabled: false };
 
 export const DefaultHidden = (args) => <Button {...args} />;
-
-DefaultHidden.args = { ...Basic.args, hide: true };
+DefaultHidden.args = { ...Basic.args, hidden: true };

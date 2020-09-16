@@ -1,70 +1,77 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withSlides } from './Context';
+
+import { useSlides } from './Context';
+import { useEpisode } from '../Episode/Context';
+
 import Button from '../Button';
 
-const ControlButton = withSlides(({
+const ControlButton = ({
   prev,
-  prevSlide,
-  nextSlide,
   children,
-  hide,
+  hidden,
 }) => {
+  const {
+    prevSlide,
+    nextSlide,
+    slidesCount,
+    currentSlide,
+  } = useSlides();
+  const {
+    setStepProgress,
+  } = useEpisode();
+
   const handleClick = () => {
     if (prev) {
       prevSlide();
+      setStepProgress((currentSlide - 1) / slidesCount);
     } else {
       nextSlide();
+      setStepProgress((currentSlide + 1) / slidesCount);
     }
   };
 
-  return <Button hide={hide} onClick={handleClick}>{children}</Button>;
-});
+  return <Button hidden={hidden} onClick={handleClick}>{children}</Button>;
+};
 
 ControlButton.propTypes = {
   prev: PropTypes.bool,
-  slidesCount: PropTypes.number,
-  currentSlide: PropTypes.number,
-  prevSlide: PropTypes.func,
-  nextSlide: PropTypes.func,
   children: PropTypes.node,
-  text: PropTypes.node,
-  hide: PropTypes.bool,
+  hidden: PropTypes.bool,
 };
 
 ControlButton.defaultProps = {
   prev: false,
   children: null,
-  text: null,
-  hide: false,
+  hidden: false,
 };
 
-export const PrevButton = ({ hide }) => (
-  <ControlButton hide={hide} prev>
+export const PrevButton = ({ hidden }) => (
+  <ControlButton hidden={hidden} prev>
     Back
   </ControlButton>
 );
 
 PrevButton.propTypes = {
-  hide: PropTypes.bool,
+  hidden: PropTypes.bool,
 };
 
 PrevButton.defaultProps = {
-  hide: false,
+  hidden: false,
 };
 
-export const NextButton = ({ hide }) => (
-  <ControlButton hide={hide}>
+export const NextButton = ({ hidden }) => (
+  <ControlButton hidden={hidden}>
     Continue
   </ControlButton>
 );
 
 NextButton.propTypes = {
-  hide: PropTypes.bool,
+  hidden: PropTypes.bool,
 };
 
 NextButton.defaultProps = {
-  hide: false,
+  hidden: false,
 };
 
 export default ControlButton;

@@ -1,6 +1,19 @@
-import { useReducer } from 'react';
+/* eslint-disable no-underscore-dangle */
+import {
+  // useCallback,
+  useReducer,
+} from 'react';
 
-const defaultState = {};
+const defaultState = {
+  stepProgress: 0,
+  seasonNr: 0,
+  episodeNr: 0,
+  steps: [],
+  audioMuted: false,
+  audioVolume: 1,
+};
+
+const init = () => defaultState;
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -14,10 +27,16 @@ const reducer = (state, action) => {
         ...state,
         episodeNr: action.payload,
       };
+    case 'SET_STEP_PROGRESS':
+      return {
+        ...state,
+        stepProgress: Math.max(0, Math.min(1, action.payload)),
+      };
     case 'MAKE_EPISODE_STEP':
       return {
         ...state,
         steps: [...(state.steps || []), action.payload],
+        stepProgress: 0,
       };
     case 'TOGGLE_AUDIO':
       return {
@@ -34,32 +53,43 @@ const reducer = (state, action) => {
   }
 };
 
-const useApp = ({
-  initialState = defaultState,
-} = {}) => {
-  const proxyReducer = (fn) => (...args) => {
-    const returned = fn(...args);
-    // eslint-disable-next-line no-console
-    console.info('dispatch app reducer', args, returned);
-    return returned;
-  };
+const proxyReducer = (fn) => (...args) => {
+  const returned = fn(...args);
+  return returned;
+};
 
-  const [state, dispatch] = useReducer(proxyReducer(reducer), initialState);
-  const proxyDispatch = (...args) => {
-    const returned = dispatch(...args);
-    // eslint-disable-next-line no-console
-    console.info('dispatch app reducer', args, returned);
-    return returned;
+const proxyDispatch = (dispatch) => (...args) => {
+  const returned = dispatch(...args);
+  return returned;
+};
+
+const useApp = (opts) => {
+  const {
+    initialState = defaultState,
+  } = opts || {
+    initialState: defaultState,
   };
+  const [state, dispatch] = useReducer(proxyReducer(reducer), initialState, init);
+  const proxiedDispatch = proxyDispatch(dispatch);
 
   return {
     ...state,
-    setSeason: (nr) => proxyDispatch({ type: 'SET_SEASON', payload: nr }),
-    setEpisode: (nr) => proxyDispatch({ type: 'SET_EPISODE', payload: nr }),
-    makeStep: (id) => proxyDispatch({ type: 'MAKE_EPISODE_STEP', payload: id }),
-    toggleAudio: () => proxyDispatch({ type: 'TOGGLE_AUDIO' }),
-    setAudioVolume: (val) => proxyDispatch({ type: 'SET_AUDIO_VOLUME', payload: val }),
+    setStepProgress: (val) => proxiedDispatch({ type: 'SET_STEP_PROGRESS', payload: val }),
+    setSeason: (nr) => proxiedDispatch({ type: 'SET_SEASON', payload: nr }),
+    setEpisode: (nr) => proxiedDispatch({ type: 'SET_EPISODE', payload: nr }),
+    makeStep: (id) => proxiedDispatch({ type: 'MAKE_EPISODE_STEP', payload: id }),
+    toggleAudio: () => proxiedDispatch({ type: 'TOGGLE_AUDIO' }),
+    setAudioVolume: (val) => proxiedDispatch({ type: 'SET_AUDIO_VOLUME', payload: val }),
   };
 };
 
 export default useApp;
+
+export const useAppStuff = () => {
+  const stuff = useApp();
+  // if (typeof window !== 'undefined') {
+  //   window.__mkMDXHack = window.__mkMDXHack || stuff;
+  //   return window.__mkMDXHack;
+  // }
+  return stuff;
+};

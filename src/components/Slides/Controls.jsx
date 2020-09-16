@@ -1,37 +1,77 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { createUseStyles, useTheme } from 'react-jss';
-import { withSlides } from './Context';
-import { PrevButton, NextButton } from './ControlButton';
 
+import { useSlides } from './Context';
+
+import { PrevButton, NextButton } from './ControlButton';
 import Progress from '../Progress/Progress';
 
-// eslint-disable-next-line
-const useStyles = createUseStyles((theme) => ({}));
+export const defaultComponents = {
+  Progress,
+  PrevButton,
+  NextButton,
+};
 
-const Controls = withSlides(({
-  slidesCount,
-  currentSlide,
+// eslint-disable-next-line
+const useStyles = createUseStyles((theme) => ({
+  root: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'stretch',
+  },
+  buttonWrapper: {},
+  progress: {
+    minWidth: 100,
+    marginLeft: 20,
+    marginRight: 20,
+    display: 'flex',
+    flexDirection: 'column',
+  },
+}));
+
+const Controls = ({
+  className,
+  components: {
+    Progress: ProgressComp = Progress,
+    PrevButton: PrevButtonComp = PrevButton,
+    NextButton: NextButtonComp = NextButton,
+  } = defaultComponents,
 }) => {
   const theme = useTheme();
   const classes = useStyles({ theme });
+  const {
+    slidesCount,
+    currentSlide,
+  } = useSlides();
+
   return (
-    <div className={classes.root}>
+    <div
+      className={[classes.root, className].filter(Boolean).join(' ')}
+    >
       <div className={classes.buttonWrapper}>
-        <PrevButton hide={currentSlide < 1} />
+        <PrevButtonComp hidden={currentSlide < 1 || slidesCount < 2} />
       </div>
+
       <div className={classes.progress}>
-        <Progress min={currentSlide} max={slidesCount} />
+        <ProgressComp min={currentSlide} max={slidesCount - 1} />
       </div>
+
       <div className={classes.buttonWrapper}>
-        <NextButton hide={currentSlide > slidesCount} />
+        <NextButtonComp hidden={currentSlide >= slidesCount} />
       </div>
     </div>
   );
-});
+};
 
 Controls.propTypes = {
-  setStepProgress: PropTypes.func.isRequired,
+  className: PropTypes.string,
+  components: PropTypes.objectOf(PropTypes.elementType),
+};
+
+Controls.defaultProps = {
+  className: null,
+  components: defaultComponents,
 };
 
 export default Controls;

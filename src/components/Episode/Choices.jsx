@@ -1,52 +1,86 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { createUseStyles, useTheme } from 'react-jss';
-import { withEpisode } from './Context';
+import { useEpisode } from './Context';
 import Button from '../Button';
-import Card from '../Card/Card';
 
 // eslint-disable-next-line
-const useStyles = createUseStyles((theme) => ({}));
+const useStyles = createUseStyles((theme) => ({
+  root: {},
+  hidden: {
+    opacity: 0.25,
+  },
+  button: {},
+}));
+
+export const defaultComponents = { Button };
 
 const Choices = ({
-  getStepInfo,
-  makeStep,
+  components: {
+    Button: ButtonComp = Button,
+  } = defaultComponents,
   progress,
+  classes: baseClasses,
 }) => {
+  const episode = useEpisode();
+
+  const {
+    makeStep,
+    getStepInfo,
+  } = episode;
+
   const step = getStepInfo();
   const handleChoice = (choice) => () => {
     makeStep(choice.target, choice);
   };
   const theme = useTheme();
-  const classes = useStyles({ theme });
+  const classes = {
+    ...useStyles({ theme }),
+    ...(baseClasses || {}),
+  };
+
+  if (!step || !Array.isArray(step.choices) || !step.choices.length) {
+    return null;
+  }
+
+  const hidden = !step.showChoices && progress < 1;
+
   return (
-    <Card className={classes.root} hide={progress <= 1}>
-      <div
-        className={[
-          classes.inner,
-          progress <= 1 && classes.hide,
-        ].filter(Boolean).join(' ')}
-      >
-        {step && step.choices.map((choice) => (
-          <Button
-            key={choice.target}
-            onClick={handleChoice(choice)}
-            className={classes.button}
-          >
-            {choice.title}
-          </Button>
-        ))}
-      </div>
-    </Card>
+    <div
+      data-hidden={hidden}
+      className={[
+        classes.root,
+        hidden && classes.hidden,
+      ].filter(Boolean).join(' ')}
+    >
+      {step.choices.map((choice) => (
+        <ButtonComp
+          key={choice.target}
+          onClick={handleChoice(choice)}
+          className={classes.button}
+          hidden={hidden}
+        >
+          {choice.title}
+        </ButtonComp>
+      ))}
+    </div>
   );
 };
 
 Choices.propTypes = {
-  getStepInfo: PropTypes.func.isRequired,
-  makeStep: PropTypes.func.isRequired,
-  progress: PropTypes.number.isRequired,
+  classes: PropTypes.objectOf(PropTypes.string),
+  components: PropTypes.shape({
+    Button: PropTypes.elementType,
+  }),
+  progress: PropTypes.number,
+};
+
+Choices.defaultProps = {
+  classes: null,
+  components: defaultComponents,
+  progress: 0,
 };
 
 export default Choices;
 
-export const Connected = withEpisode(Choices);
+export const Connected = Choices;

@@ -206,18 +206,19 @@ class GraphBase extends React.Component {
   };
 
   render() {
-    const { steps, classes } = this.props;
+    const { steps, className, classes } = this.props;
     return (
       <div
         key={steps.join('')}
         ref={this.refEl}
-        className={(classes || {}).root}
+        className={[className, (classes || {}).root].filter(Boolean).join(' ')}
       />
     );
   }
 }
 
 GraphBase.propTypes = {
+  className: PropTypes.string,
   classes: PropTypes.objectOf(PropTypes.string),
   full: PropTypes.bool,
   onItemMouseEnter: PropTypes.func,
@@ -235,6 +236,7 @@ GraphBase.propTypes = {
 };
 
 GraphBase.defaultProps = {
+  className: null,
   classes: null,
   full: false,
   onItemMouseEnter: null,

@@ -1,28 +1,35 @@
-import React from 'react';
+import React, { useContext, createContext } from 'react';
+
+const noop = () => { };
 
 export const defaultEpisode = {
+  title: '',
+  assets: [],
   steps: [],
   episodeSteps: {},
-  getStepInfo: () => { },
-  makeStep: () => { },
-  setStepProgress: () => { },
+  currentStep: {},
+  stepProgress: 0,
+  showChoices: false,
 };
 
-const EpisodeContext = React.createContext(defaultEpisode);
+const EpisodeContext = createContext({
+  getStepInfo: noop,
+  makeStep: noop,
+  setStepProgress: noop,
+  ...defaultEpisode,
+});
 
 export default EpisodeContext;
 
-export const withEpisode = (Comp) => {
-  const returned = (props) => (
-    <EpisodeContext.Consumer>
-      {
-        (ctx) => (
-          // eslint-disable-next-line react/jsx-props-no-spreading
-          <Comp {...{ ...props, ...ctx }} />
-        )
-      }
-    </EpisodeContext.Consumer>
-  );
+export const useEpisode = () => useContext(EpisodeContext);
 
-  return returned;
-};
+export const withEpisode = (Comp) => (props) => (
+  <EpisodeContext.Consumer>
+    {(ctx) => (
+      <Comp
+        // eslint-disable-next-line react/jsx-props-no-spreading
+        {...{ ...props, ...ctx }}
+      />
+    )}
+  </EpisodeContext.Consumer>
+);
